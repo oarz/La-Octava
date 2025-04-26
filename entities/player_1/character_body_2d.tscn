@@ -1,17 +1,42 @@
-[gd_scene load_steps=4 format=3 uid="uid://dg2dp31r8gmi4"]
+[gd_scene load_steps=8 format=3 uid="uid://dg2dp31r8gmi4"]
 
-[ext_resource type="Texture2D" uid="uid://ctkjm5c4r68jf" path="res://icon.svg" id="1_7tbx4"]
 [ext_resource type="Script" uid="uid://d4ge68x4hflhv" path="res://entities/player_1/character_body_2d.gd" id="1_84cku"]
+[ext_resource type="Texture2D" uid="uid://umiu50xdvtu4" path="res://i.jpg" id="2_735h6"]
+[ext_resource type="PackedScene" uid="uid://cm6b6pk6xar6y" path="res://entities/player_1/projectile/bullet.tscn" id="2_u1coy"]
+[ext_resource type="Texture2D" uid="uid://5ah1mx15v1da" path="res://1500x500.jpg" id="3_u1coy"]
+[ext_resource type="Script" uid="uid://d283iqsv18xui" path="res://entities/player_1/weapon.gd" id="5_fbr70"]
+[ext_resource type="Script" uid="uid://be0pyc1sxkmyl" path="res://entities/player_1/muzzle.gd" id="6_s0t0f"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_84cku"]
 size = Vector2(128, 80)
 
 [node name="CharacterBody2D" type="CharacterBody2D"]
 script = ExtResource("1_84cku")
+Bullet = ExtResource("2_u1coy")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_7tbx4")
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_735h6")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 24)
 shape = SubResource("RectangleShape2D_84cku")
+disabled = true
+
+[node name="weapon" type="Sprite2D" parent="."]
+position = Vector2(3.8147e-06, -48)
+rotation = -1.5708
+scale = Vector2(0.0623333, 0.073)
+texture = ExtResource("3_u1coy")
+script = ExtResource("5_fbr70")
+
+[node name="muzzle" type="Marker2D" parent="."]
+position = Vector2(1.52588e-05, -48)
+scale = Vector2(0.32, 0.17)
+script = ExtResource("6_s0t0f")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.179
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
